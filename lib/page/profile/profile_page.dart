@@ -184,100 +184,95 @@ class ProfilePage extends GetView<ProfileController> {
         SizedBox(
           height: 10.w,
         ),
-        SizedBox(
-          height: 110.h,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 5,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin: EdgeInsets.only(right: 26.w),
-                  child: Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.asset(
-                          ImageConstant.imageThumbnails,
-                          width: 70.w,
-                          height: 70.h,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Text(
-                        "Befff",
-                        style: Style().interSubheadlineEmphasized,
-                      ),
-                    ],
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(
+            4,
+            (index) => Container(
+              child: Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: Image.asset(
+                      ImageConstant.imageThumbnails,
+                      width: 90.w,
+                      height: 90.w,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                );
-              }),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Text(
+                    "Befff",
+                    style: Style().interSubheadlineEmphasized,
+                  ),
+                ],
+              ),
+            ),
+          ),
         )
       ],
     );
   }
 
   Widget _buildBody() {
-    return Expanded(
-      child: StreamBuilder<List<MealsModel>>(
-        stream: controller.mealsStream,
-        builder: (context, snapshot) {
-          final meals;
-          if (snapshot.data != null) {
-            meals = snapshot.data;
-          } else {
-            meals = controller.listMealDB;
-          }
-
-          return meals != null
-              ? SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Wrap(
-                        spacing: 6.w,
-                        runSpacing: 16.w,
-                        children: List.generate(
-                          meals.length,
-                          (index) => ClipRRect(
-                            borderRadius: BorderRadius.circular(8.sp),
-                            child: Image.network(
-                              meals[index].strMealThumb,
-                              width: (Get.width - 48.w) / 3,
-                              height: 116,
-                              fit: BoxFit.cover,
-                            ),
+    return StreamBuilder<List<MealsModel>>(
+      stream: controller.mealsStream,
+      builder: (context, snapshot) {
+        final meals;
+        if (snapshot.data != null) {
+          meals = snapshot.data;
+          controller.listMealDB.value = snapshot.data!;
+        } else {
+          meals = controller.listMealDB;
+        }
+        return (controller.listMealDB.isNotEmpty)
+            ? SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Wrap(
+                      spacing: 6.w,
+                      runSpacing: 16.w,
+                      children: List.generate(
+                        meals.length,
+                        (index) => ClipRRect(
+                          borderRadius: BorderRadius.circular(8.sp),
+                          child: Image.network(
+                            meals[index].strMealThumb,
+                            width: (Get.width - 48.w) / 3,
+                            height: 116,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 16.h,
+                    ),
+                    SizedBox(
+                      height: 16.h,
+                    ),
+                  ],
+                ),
+              )
+            : Container(
+                padding: EdgeInsets.all(50.h),
+                height: 200,
+                child: Center(
+                  child: Column(
+                    children: [
+                      Image.network(
+                        "https://cdn-icons-png.flaticon.com/512/5445/5445197.png",
+                        width: 40,
+                        height: 40,
+                      ),
+                      Text(
+                        "Món ăn yêu thích Trống",
+                        style: Style().interBodyRegular,
                       ),
                     ],
                   ),
-                )
-              : Container(
-                  padding: EdgeInsets.all(50.h),
-                  height: 200,
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Image.network(
-                          "https://cdn-icons-png.flaticon.com/512/5445/5445197.png",
-                          width: 40,
-                          height: 40,
-                        ),
-                        Text(
-                          "Món ăn yêu thích Trống",
-                          style: Style().interBodyRegular,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-        },
-      ),
+                ),
+              );
+      },
     );
   }
 }
