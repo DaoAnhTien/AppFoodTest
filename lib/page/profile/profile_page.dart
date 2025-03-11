@@ -23,34 +23,34 @@ class ProfilePage extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     Get.put(ProfileController(client: ApiClient()));
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Style.backgrooundColor,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          centerTitle: true,
-          title: Text(
-            "Trang cá nhân",
-            style:
-                Style().interBodyEmphasized.copyWith(color: Style.primary600),
-          ),
+    return Scaffold(
+      backgroundColor: Style.backgrooundColor,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          "Trang cá nhân",
+          style: Style().interBodyEmphasized.copyWith(color: Style.primary600),
         ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildHeader(),
-              Text(
-                "Danh sách yêu thích",
-                style: Style().interBodyEmphasized,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              _buildBody()
-            ],
-          ),
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildHeader(),
+            SizedBox(
+              height: 10.h,
+            ),
+            Text(
+              "Danh sách yêu thích",
+              style: Style().interBodyEmphasized,
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Expanded(child: _buildBody())
+          ],
         ),
       ),
     );

@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = AppRoutes.dashboard;
+  static const INITIAL = AppRoutes.splash;
 
   static final routes = [
     GetPage(
